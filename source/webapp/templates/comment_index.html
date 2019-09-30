@@ -10,11 +10,10 @@
     {% for comment in comments %}
         <h2>{{ comment.text }}</h2>
         <p>Created by {{ comment.author }} at {{ comment.created_at|date:'d.m.Y H:i:s' }}</p>
-        <p>{{ comment.article }}</p>
+        <p><a href="{% url 'article_view' comment.article.pk %}">{{ comment.article }}</a></p>
         <p>
             <a href="{% url 'comment_update' comment.pk %}">Update</a>
-{#            <a href="{% url 'article_update' article.pk %}">Edit</a>#}
-{#            <a href="{% url "article_delete" article.pk %}">Delete</a>#}
+            <a href="{% url "comment_delete" comment.pk %}">Delete</a>
         </p>
         <hr/>
     {% endfor %}
