@@ -1,18 +1,17 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import View, TemplateView
+from django.views.generic import View
 
 from webapp.forms import CommentForm
 from webapp.models import Comment
+from webapp.views.base_views import ListView
 
 
-class CommentIndexView(TemplateView):
+class CommentIndexView(ListView):
+    context_key = 'comments'
+    model = Comment
     template_name = 'comment/comment_index.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['comments'] = Comment.objects.all().order_by('created_at').reverse()
-        return context
 
 class CommentCreateView(View):
     def get(self, request, *args, **kwargs):

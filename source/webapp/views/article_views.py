@@ -1,18 +1,19 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import View, TemplateView
+from django.views.generic import View
 
 from webapp.forms import ArticleForm
 from webapp.models import Article
+from .base_views import ListView
 
 
-class IndexView(TemplateView):
+class IndexView(ListView):
+    context_key = 'articles'
+    model = Article
     template_name = 'article/index.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['articles'] = Article.objects.all()
-        return context
+    def get_objects(self):
+        return super().get_objects().order_by('-created_at')
 
 
 class ArticleView(View):
