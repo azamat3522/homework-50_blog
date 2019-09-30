@@ -2,7 +2,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View, TemplateView
 
-from webapp.forms import ArticleForm
+from webapp.forms import ArticleForm, CommentForm
 from webapp.models import Article, Comment
 
 
@@ -85,3 +85,21 @@ class CommentIndexView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['comments'] = Comment.objects.all()
         return context
+
+class CommentCreateView(View):
+    def get(self, request, *args, **kwargs):
+        form = CommentForm()
+        return render(request, 'comment_create.html', context={'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = CommentForm(data=request.POST)
+        if form.is_valid():
+            Comment.objects.create(
+                article=form.cleaned_data['article'],
+                text=form.cleaned_data['text'],
+                author=form.cleaned_data['author']
+            )
+            return redirect('comment_view')
+        else:
+            return render(request, 'comment_create.html', context={'form': form})
+
