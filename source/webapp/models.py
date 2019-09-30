@@ -15,6 +15,7 @@ class Article(models.Model):
     category = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, blank=True, verbose_name='Категория',
                                  related_name='articles')
 
+
     def __str__(self):
         return self.title
 

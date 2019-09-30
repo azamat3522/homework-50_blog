@@ -77,3 +77,12 @@ h1 {
    box-shadow: red 0 0 3px;
 }
 
+.Comment{
+
+    border: 2px solid salmon;
+    padding: 20px;
+    width: 200px;
+    height: 100px;
+    display: inline-block;
+}
+

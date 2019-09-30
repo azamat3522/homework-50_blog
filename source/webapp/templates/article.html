@@ -12,4 +12,8 @@
     <h1>{{ article.title }}</h1>
     <p>Created by <b>{{ article.author }}</b> at <b>{{ article.created_at|date:'d.m.Y H:i:s'}}</b></p>
     <div class="pre">{{ article.text }}</div>
+    <p><br>Comments:</p>
+    {% for comment in comments %}
+        <p class="Comment">{{ comment.text }}</p>
+    {% endfor %}
 {% endblock %}

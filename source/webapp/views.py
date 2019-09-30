@@ -15,14 +15,15 @@ class IndexView(TemplateView):
         return context
 
 
-class ArticleView(TemplateView):
-    template_name = 'article.html'
+class ArticleView(View):
+    # template_name = 'article.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    def get(self, request,**kwargs):
         article_pk = kwargs.get('pk')
-        context['article'] = get_object_or_404(Article, pk=article_pk)
-        return context
+        article = get_object_or_404(Article, pk=article_pk)
+        comments = article.comments.order_by('created_at').reverse()
+        print(article)
+        return render(request,'article.html',context={'comments': comments, 'article': article})
 
 class ArticleCreateView(View):
     def get(self, request, *args, **kwargs):
