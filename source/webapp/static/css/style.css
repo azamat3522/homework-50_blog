@@ -86,3 +86,29 @@ h1 {
     display: inline-block;
 }
 
+.pagination {
+   text-align: center;
+}
+
+.pagination a, .pagination .page-disabled {
+   display: inline-block;
+   border: solid 1px darkslategray;
+   border-radius: 3px;
+   padding: 5px;
+   margin: 3px;
+}
+
+.pagination a {
+   background: darkslategray;
+   color: white;
+}
+
+.pagination a:hover {
+   background: lightgreen;
+}
+
+.pagination .page-disabled {
+   background: darkslategray;
+   color: #dddddd
+}
+

@@ -1,19 +1,21 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import View
+from django.views.generic import View, ListView
 
 from webapp.forms import ArticleForm
 from webapp.models import Article
-from .base_views import ListView
+
 
 
 class IndexView(ListView):
-    context_key = 'articles'
+    context_object_name = 'articles'
     model = Article
     template_name = 'article/index.html'
+    ordering = ['-created_at']
+    paginate_by = 3
+    paginate_orphans = 1
 
-    def get_objects(self):
-        return super().get_objects().order_by('-created_at')
+
 
 
 class ArticleView(View):
