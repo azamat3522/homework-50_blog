@@ -1,10 +1,11 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.views.generic import View
 
 from webapp.forms import CommentForm
 from webapp.models import Comment
-from webapp.views.base_views import ListView
+from webapp.views.base_views import ListView, CreateView
 
 
 class CommentIndexView(ListView):
@@ -13,7 +14,14 @@ class CommentIndexView(ListView):
     template_name = 'comment/comment_index.html'
 
 
-class CommentCreateView(View):
+class CommentCreateView(CreateView):
+    model = Comment
+    template_name = 'comment/comment_create.html'
+    form_class = CommentForm
+
+
+    def get_redirect_url(self):
+        return reverse('article_view')
     def get(self, request, *args, **kwargs):
         form = CommentForm()
         return render(request, 'comment/comment_create.html', context={'form': form})

@@ -17,3 +17,7 @@ class CommentForm(forms.Form):
                                      empty_label=None)
     author = forms.CharField(max_length=40, required=False, label='Author', initial='Аноним')
     text = forms.CharField(max_length=400, required=True, label='Text',widget=widgets.Textarea)
+
+
+class SimpleSearchForm(forms.Form):
+    search = forms.CharField(max_length=100, required=False, label="Найти")
