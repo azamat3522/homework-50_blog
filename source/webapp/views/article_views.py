@@ -5,8 +5,7 @@ from django.utils.http import urlencode
 from django.views.generic import View, ListView, DetailView, CreateView
 
 from webapp.forms import ArticleForm, SimpleSearchForm
-from webapp.models import Article
-
+from webapp.models import Article, Tag
 
 
 class IndexView(ListView):
@@ -65,8 +64,23 @@ class ArticleCreateView(CreateView):
     template_name = 'article/create.html'
     form_class = ArticleForm
 
+    def form_valid(self, form):
+        self.object = form.save()
+        self.create_tag()
+        return redirect(self.get_success_url())
+
+    def create_tag(self):
+        tag_list = self.request.POST.get('tags').split(',')
+        for tag in tag_list:
+            tag, _ = Tag.objects.get_or_create(name=tag)
+            self.object.tags.add(tag)
+
+
+
     def get_success_url(self):
         return reverse('article_view', kwargs={'pk': self.object.pk})
+
+
 
 
 class ArticleUpdateView(View):

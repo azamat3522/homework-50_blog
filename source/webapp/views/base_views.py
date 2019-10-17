@@ -42,7 +42,7 @@ class CreateView(View):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
-        return render(request, self.template_name , context={'form': form})
+        return render(request, self.template_name, context={'form': form})
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(data=request.POST)

@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Article(models.Model):
 
     title = models.CharField(max_length=200, null=False, blank=False, verbose_name='Заголовок')
@@ -15,10 +16,8 @@ class Article(models.Model):
     category = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, blank=True, verbose_name='Категория',
                                  related_name='articles')
 
-    tags = models.ManyToManyField('Tag', blank=True, through='ArticleTag',
-                                  through_fields=('article', 'tag'), related_name='articles',
+    tags = models.ManyToManyField('Tag', blank=True, related_name='articles',
                                   verbose_name='Теги')
-
 
     def __str__(self):
         return self.title
@@ -52,11 +51,3 @@ class Tag(models.Model):
         return self.name
 
 
-class ArticleTag(models.Model):
-    article = models.ForeignKey('webapp.Article', related_name='article_tags',
-                                on_delete=models.CASCADE, verbose_name='Статья')
-    tag = models.ForeignKey('webapp.Tag', related_name='tag_articles',
-                            on_delete=models.CASCADE, verbose_name='Тег')
-
-    def __str__(self):
-       return "{} | {}".format(self.article, self.tag)
